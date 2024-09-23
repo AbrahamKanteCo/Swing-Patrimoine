@@ -4,12 +4,26 @@ import ChartComponent from '../component/Chart';
 const Interface = () => {
   const [dateStart, setDateStart] = useState('2024-07-01');
   const [dateEnd, setDateEnd] = useState('2024-07-16');
+  const [checkedItems, setCheckedItems] = useState({
+    Agregat: true,
+    Trésorerie: true,
+    Immobilisations: true,
+    Obligations: true,
+  });
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setCheckedItems(prevState => ({
+      ...prevState,
+      [name]: checked,
+    }));
+  };
   
   return (
     <div className="flex">
       {/* Left Section */}
-      <div className="w-1/3 p-2 bg-gray-200 font-medium">
-        <div className="border rounded-lg p-1 space-y-4">
+      <div className="w-1/3 p-2 bg-[#eeeded] font-medium">
+        <div className=" rounded-lg p-1 space-y-4">
           <div className="flex space-x-4">
             <p className="text-sm">Patrimoine</p>
             <select className="px-4 bg-white rounded-md text-sm">
@@ -19,16 +33,40 @@ const Interface = () => {
 
           <div className="flex space-x-4">
             <label className="inline-flex items-center text-sm flex gap-2">
-              <input type="checkbox" className="form-checkbox" /> Agregat
+              <input
+                type="checkbox"
+                className="form-checkbox"
+                name="Agregat"
+                checked={checkedItems.Agregat}
+                onChange={handleCheckboxChange}
+              /> Agregat
             </label>
             <label className="inline-flex items-center text-sm flex gap-2">
-              <input type="checkbox" className="form-checkbox" /> Trésorerie
+              <input
+                type="checkbox"
+                className="form-checkbox"
+                name="Trésorerie"
+                checked={checkedItems.Trésorerie}
+                onChange={handleCheckboxChange}
+              /> Trésorerie
             </label>
             <label className="inline-flex items-center text-sm flex gap-2">
-              <input type="checkbox" className="form-checkbox" /> Immobilisations
+              <input
+                type="checkbox"
+                className="form-checkbox"
+                name="Immobilisations"
+                checked={checkedItems.Immobilisations}
+                onChange={handleCheckboxChange}
+              /> Immobilisations
             </label>
             <label className="inline-flex items-center text-sm flex gap-2">
-              <input type="checkbox" className="form-checkbox" /> Obligations
+              <input
+                type="checkbox"
+                className="form-checkbox"
+                name="Obligations"
+                checked={checkedItems.Obligations}
+                onChange={handleCheckboxChange}
+              /> Obligations
             </label>
           </div>
 
@@ -77,7 +115,7 @@ const Interface = () => {
       {/* Right Section */}
       <div className="w-full p-4">
         <div className="border rounded-lg p-4 h-full w-full">
-          <ChartComponent/>
+          <ChartComponent checkedItems={checkedItems} />
         </div>
       </div>
     </div>

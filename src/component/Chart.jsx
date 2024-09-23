@@ -3,7 +3,7 @@ import { Chart, LineElement, LineController, PointElement, LinearScale, Category
 
 Chart.register(LineElement, LineController, PointElement, LinearScale, CategoryScale, Legend, Tooltip);
 
-const ChartComponent = () => {
+const ChartComponent = ({ checkedItems }) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -11,11 +11,12 @@ const ChartComponent = () => {
       labels: ['07-02', '07-04', '07-06', '07-08', '07-10', '07-12', '07-14', '07-16'],
       datasets: [
         {
-          label: 'Myriade Fr',
+          label: 'Agregat',
           data: [60_000, 40_000, 60_000, 100_000, 100_000, 80_000, 60_000, 60_000],
           borderColor: 'green',
           borderWidth: 2,
           fill: false,
+          hidden: !checkedItems.Agregat,
         },
         {
           label: 'Trésorerie',
@@ -23,6 +24,7 @@ const ChartComponent = () => {
           borderColor: 'red',
           borderWidth: 3,
           fill: false,
+          hidden: !checkedItems.Trésorerie, 
         },
         {
           label: 'Obligations',
@@ -31,6 +33,7 @@ const ChartComponent = () => {
           borderWidth: 2,
           borderDash: [10, 5],
           fill: false,
+          hidden: !checkedItems.Obligations, 
         },
       ],
     };
@@ -70,7 +73,7 @@ const ChartComponent = () => {
     return () => {
       chartInstance.destroy();
     };
-  }, []);
+  }, [checkedItems]);
 
   return <canvas className='w-full' ref={chartRef}></canvas>;
 };
